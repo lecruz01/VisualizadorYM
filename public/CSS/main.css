@@ -1,9 +1,85 @@
 body {
-    display: flex;
-    min-height: 100vh;
-    flex-direction: column;
-  }
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #EEE;
+}
 
-  main {
-    flex: 1 0 auto;
-  }
+header {
+  position: relative;
+  width: 100vw;
+  height: 5vh;
+}
+
+nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0 !important;
+  padding-left: 15px;
+  padding-right: 15px;
+  background-color: lightblue;
+}
+
+nav .logo {
+  left: 0;
+  color: white;
+  text-shadow: 1px 1px 2px #000;
+}
+
+nav ul {
+  position: absolute;
+  right: 0;
+  list-style-type: none;
+  display: table-row;
+  height: 100%;
+}
+
+nav ul li {
+  display: table-cell;
+  height: 100%;
+  min-width: 150px;
+  margin-right: 10px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+nav ul li a {
+  display: block;
+  line-height: 5vh;
+  font-size: 1.2em;
+  color: white;
+  text-shadow: 0 0 2px #333;
+  text-decoration: none;
+}
+
+nav ul li a:hover {
+  transition: background-color 500ms, color 500ms;
+  color: #666;
+  background-color: #EEE;
+  text-shadow: 1px 1px 3px #333;
+  text-decoration: none;
+}
+
+main {
+  position: relative;
+  width: 100vw;
+  height: 80vh;
+}
+
+footer {
+  position: relative;
+  height: 15vh;
+  width: 100vw;
+  background-color: lightblue;
+}
+
+#map {
+  height: 80vh;
+}
+
+.toolBar {
+  width: 40vw;
+}
