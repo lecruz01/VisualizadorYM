@@ -1,17 +1,16 @@
-<nav>
-    <div class="menu-burguer" (click)="openMobileMenu()">
+<div class="nav">
+    <div class="menu-burguer" (click)="toggleMobileMenu()">
         <span class="valign-helper"></span>
-        <i class="fas fa-bars fa-2x"></i>
-        <div [ngClass]="menuOpen === 1 ? 'menu-mobile menu-mov-open' : 'menu-mobile'">
-            <ul>
-                <li>Item 1</li>
-                <li>Item 2</li>
-                <li>Item 3</li>
-                <li>Item 4</li>
-            </ul>
-        </div>
+        <fa-icon [icon]="['fas', 'bars']" size="2x"></fa-icon>
+    </div>
+    <div [ngClass]="menuOpen ? 'sidenav-mov sidenav-open' : 'sidenav-mov'">
+        <ul>
+            <li *ngFor="let item of menus">
+                <a [routerLink]="item.link" (click)="toggleMobileMenu()">{{ item.name }}</a>
+            </li>
+        </ul>
     </div>
     <div class="title">
         <h1>{{ title }}</h1>
     </div>
-</nav>
+</div>

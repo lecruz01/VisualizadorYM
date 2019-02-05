@@ -8,13 +8,26 @@ import { Component } from '@angular/core';
 
 export class HeaderComponent {
     title =  'Visualizador de Capas';
-    menuOpen = 0;
+    menuOpen = false;
+    menus: any[] = [
+        {
+            'name': 'Visualizador',
+            'link': 'map'
+        },
+        {
+            'name': 'Administrar Capas',
+            'link': 'admin'
+        },
+        {
+            'name': 'Información',
+            'link': 'info'
+        }
+    ];
 
     constructor() {
     }
 
-    openMobileMenu () {
-        (this.menuOpen === 1) ? this.menuOpen = 0 : this.menuOpen = 1;
-        console.log(this.menuOpen);
+    toggleMobileMenu () {
+        this.menuOpen = !this.menuOpen;
     }
 }
