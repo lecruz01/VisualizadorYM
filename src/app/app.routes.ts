@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 /**
  * Importar componentes
  */
-import { MapComponent } from './components/map/map.component';
+import { MapComponent } from './components/pages/map/map.component';
 import { AdminComponent } from './components/pages/admin/admin.component';
 import { InfoComponent } from './components/pages/info/info.component';
 

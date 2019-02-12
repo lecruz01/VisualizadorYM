@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
 })
 
 export class HeaderComponent {
-    title =  'Visualizador de Capas';
+    events: string[] = [];
     menuOpen = false;
     menus: any[] = [
         {
@@ -29,5 +29,6 @@ export class HeaderComponent {
 
     toggleMobileMenu () {
         this.menuOpen = !this.menuOpen;
+        console.log(this.menuOpen);
     }
 }

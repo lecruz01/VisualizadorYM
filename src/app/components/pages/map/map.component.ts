@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LayerService } from './../../services/layerService/layer.service';
+import { LayerService } from './../../../services/layerService/layer.service';
 
 @Component({
     selector: 'app-map-comp',
@@ -24,7 +24,7 @@ export class MapComponent implements OnInit {
     }
 
     loadMap() {
-        mapboxgl.accessToken = 'pk.eyJ1IjoibGVjcnV6MDEiLCJhIjoiY2pyY2t1aXJiMWV3bTQ0bndiZHFtZnd3dCJ9.T_AWHGpxthQg8DRhzuKTGg';
+        // @ts-ignore
         this.map = new mapboxgl.Map({
             container: 'map',
             style: this.type,
@@ -33,7 +33,7 @@ export class MapComponent implements OnInit {
         });
         this.map.on('load', () => {
             this.layers.forEach( (value) => {
-                console.log(value);
+                // console.log(value);
                 this.map.addLayer(value);
             });
         });
