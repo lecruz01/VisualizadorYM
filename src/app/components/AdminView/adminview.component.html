@@ -1,0 +1,65 @@
+<div class="container">
+    <div class="row">
+        <h1 class="col-12">Administración de Capas</h1>
+        <p class="col-12">En esta sección podra realizar operaciones sobre las capas que se encuentran cargadas actualmente en el sistema.</p>
+    </div>
+    <hr>
+    <div class="row">
+        <h3 class="col-12">Visualizar capas actuales</h3>
+    </div>
+    <div class="row">
+        <div class="accordion col-12 col-sm-5" id="capasActuales">
+            <div class="card" *ngFor="let capa of layers; let i = index;">
+                <div class="card-header" id="header-capa{{ i }}">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" attr.data-target="#capa{{ i }}" aria-expanded="true" attr.aria-controls="capa{{ i }}">
+                            {{ capa.id | uppercase }}
+                        </button>
+                    </h2>
+                </div>
+
+                <div id="capa{{ i }}" class="collapse" attr.aria-labelledby="header-capa{{ i }}" data-parent="#capasActuales">
+                    <div class="card-body acciones-capa">
+                        <button *ngIf="btnsShow[i] == 0" id="buttonShow{{ i }}" type="button" class="btn btn-info btn-show" (click)="verCapa(i)">Visualizar</button>
+                        <button *ngIf="btnsShow[i] == 1" id="buttonHide{{ i }}" type="button" class="btn btn-warning btn-show" (click)="ocultarCapa(i, capa.id)">Ocultar</button>
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteLayerModal" (click)="cargarCapaAEliminar(i, capa.id)">Eliminar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-7" id="map"></div>
+    </div>
+    <hr>
+    <div class="row">
+        <h3 class="col-12">Agregar capa nueva</h3>
+        <form class="col-12" id="formNewLayer">
+            <div class="form-group">
+                <label for="archivoCapa">Seleccione un archivo GeoJSON para cargar</label>
+                <input type="file" class="form-control-file" id="archivoCapa">
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!-- Modal Confirmacion Borrar Capa -->
+<div class="modal fade" id="deleteLayerModal" tabindex="-1" role="dialog" aria-labelledby="deleteLayerModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteLayerModalTitle">Confirmar Eliminación</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <p>¿Estas seguro de que deseas eliminar la capa?</p>
+                <p>Esta operacion no puede deshacerse.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" (click)="eliminarCapa(i)">Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>
