@@ -8,36 +8,66 @@
         <h3 class="col-12">Visualizar capas actuales</h3>
     </div>
     <div class="row">
-        <div class="accordion col-12 col-sm-5" id="capasActuales">
-            <div class="card" *ngFor="let capa of layers; let i = index;">
-                <div class="card-header" id="header-capa{{ i }}">
-                    <h2 class="mb-0">
-                        <button class="btn btn-link" type="button" data-toggle="collapse" attr.data-target="#capa{{ i }}" aria-expanded="true" attr.aria-controls="capa{{ i }}">
-                            {{ capa.id | uppercase }}
-                        </button>
-                    </h2>
+        <div class="col-12 col-sm-5">
+            <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <a class="nav-item nav-link active" id="nav-actual-tab" data-toggle="tab" href="#nav-actual" role="tab" aria-controls="nav-actual" aria-selected="true">Capas Actuales</a>
+                    <a class="nav-item nav-link" id="nav-nueva-tab" data-toggle="tab" href="#nav-nueva" role="tab" aria-controls="nav-nueva" aria-selected="false">Nueva Capa</a>
+                </div>
+            </nav>
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-actual" role="tabpanel" aria-labelledby="nav-actual-tab">
+                    <div class="accordion" id="capasActuales">
+                        <div class="card" *ngFor="let capa of layers; let i = index;">
+                            <div class="card-header" id="header-capa{{ i }}">
+                                <h2 class="mb-0">
+                                    <button class="btn btn-link" type="button" data-toggle="collapse" attr.data-target="#capa{{ i }}" aria-expanded="true" attr.aria-controls="capa{{ i }}">
+                                                {{ capa.id | uppercase }}
+                                            </button>
+                                </h2>
+                            </div>
+
+                            <div id="capa{{ i }}" class="collapse" attr.aria-labelledby="header-capa{{ i }}" data-parent="#capasActuales">
+                                <div class="card-body acciones-capa">
+                                    <button *ngIf="btnsShow[i] == 0" id="buttonShow{{ i }}" type="button" class="btn btn-info btn-show" (click)="verCapa(i)">Visualizar</button>
+                                    <button *ngIf="btnsShow[i] == 1" id="buttonHide{{ i }}" type="button" class="btn btn-warning btn-show" (click)="ocultarCapa(i, capa.id)">Ocultar</button>
+                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteLayerModal" (click)="cargarCapaAEliminar(i, capa.id)">Eliminar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <div id="capa{{ i }}" class="collapse" attr.aria-labelledby="header-capa{{ i }}" data-parent="#capasActuales">
-                    <div class="card-body acciones-capa">
-                        <button *ngIf="btnsShow[i] == 0" id="buttonShow{{ i }}" type="button" class="btn btn-info btn-show" (click)="verCapa(i)">Visualizar</button>
-                        <button *ngIf="btnsShow[i] == 1" id="buttonHide{{ i }}" type="button" class="btn btn-warning btn-show" (click)="ocultarCapa(i, capa.id)">Ocultar</button>
-                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteLayerModal" (click)="cargarCapaAEliminar(i, capa.id)">Eliminar</button>
+
+                <div class="tab-pane fade" id="nav-nueva" role="tabpanel" aria-labelledby="nav-nueva-tab">
+                    <div class="row">
+                        <h3 class="col-12">Agregar capa nueva</h3>
+                        <form class="col-12 row" id="formNewLayer">
+                            <div class="form-group col-12">
+                                <label for="archivoCapa">Seleccione un archivo GeoJSON para cargar</label>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="archivoCapa">
+                                    <label class="custom-file-label" for="customFile">Elegir archivo</label>
+                                </div>
+                                <!-- <input type="file" class="form-control-file" id="archivoCapa"> -->
+                            </div>
+                            <div class="form-group col-12">
+                                <label for="formGroupExampleInput2">Seleccione un tipo de capa</label>
+                                <select class="form-control">
+                                    <option>Linea</option>
+                                    <option>Poligono</option>
+                                    <option>Puntos</option>
+                                </select>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="col-12 clear20" *ngIf="_scnSz.isMobile()"></div>
         <div class="col-12 col-sm-7" id="map"></div>
-    </div>
-    <hr>
-    <div class="row">
-        <h3 class="col-12">Agregar capa nueva</h3>
-        <form class="col-12" id="formNewLayer">
-            <div class="form-group">
-                <label for="archivoCapa">Seleccione un archivo GeoJSON para cargar</label>
-                <input type="file" class="form-control-file" id="archivoCapa">
-            </div>
-        </form>
+        <div class="col-12 clear20" *ngIf="_scnSz.isMobile()"></div>
+        <div class="col-12 clear20" *ngIf="_scnSz.isMobile()"></div>
     </div>
 </div>
 
@@ -58,7 +88,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-danger" (click)="eliminarCapa(i)">Confirmar</button>
+                <button type="button" class="btn btn-danger">Confirmar</button>
+                <!-- <button type=" button " class="btn btn-danger " (click)="eliminarCapa(i) ">Confirmar</button> -->
             </div>
         </div>
     </div>

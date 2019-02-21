@@ -19,13 +19,15 @@ import { ScreenDetectorService } from './services/screenService/screen.service';
 import { HeaderComponent } from './components/shared/header/header.component';
 import { MapViewComponent } from './components/MapView/mapview.component';
 import { AdminViewComponent } from './components/AdminView/adminview.component';
+import { AboutViewComponent } from './components/AboutView/about.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     MapViewComponent,
-    AdminViewComponent
+    AdminViewComponent,
+    AboutViewComponent
   ],
   imports: [
     BrowserModule,

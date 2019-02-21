@@ -2538,6 +2538,7 @@ export class LayerService {
         }
     ];
 
+
     getLayers(): any[] {
         return this.layers;
     }
