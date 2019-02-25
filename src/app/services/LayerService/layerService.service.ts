@@ -1,4 +1,7 @@
+import { HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs/internal/Rx';
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Injectable()
 export class LayerService {
@@ -2538,9 +2541,23 @@ export class LayerService {
         }
     ];
 
+    constructor( private http: HttpClient ) { }
 
     getLayers(): any[] {
         return this.layers;
+    }
+
+    createLayer(formData) {
+        let headers = new HttpHeaders();
+        /** In Angular 5, including the header Content-Type can invalidate your request */
+        // headers.append('Content-Type', 'multipart/form-data');
+        headers.append('Accept', 'application/json');
+        console.log(formData);
+        this.http.post('http://localhost:8001/api/layers', formData, { headers : headers } )
+        .subscribe(
+            data => console.log('success'),
+            error => console.log(error)
+        );
     }
 
 }

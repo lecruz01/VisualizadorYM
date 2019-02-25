@@ -41,23 +41,37 @@
 
                 <div class="tab-pane fade" id="nav-nueva" role="tabpanel" aria-labelledby="nav-nueva-tab">
                     <div class="row">
-                        <h3 class="col-12">Agregar capa nueva</h3>
-                        <form class="col-12 row" id="formNewLayer">
+                        <h3 class="col-12 text-center">Agregar capa nueva</h3>
+                        <form class="col-12" id="formNewLayer" [formGroup]="formCapa" (ngSubmit)="onSubmitFormCreate()">
                             <div class="form-group col-12">
-                                <label for="archivoCapa">Seleccione un archivo GeoJSON para cargar</label>
+                                <label for="archivoCapa">Seleccione un archivo GeoJSON para cargar<span class="text-danger">*</span></label>
                                 <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="archivoCapa">
+                                    <input type="file" class="custom-file-input" id="archivoCapa" [formControl]="form.fileCapa" (change)="prepareFile($event)">
                                     <label class="custom-file-label" for="customFile">Elegir archivo</label>
+                                </div>
+                                <div *ngIf="formSubmitted && form.fileCapa.invalid && form.fileCapa.errors.required" class="alert alert-danger fade show" role="alert">
+                                    <span>Debes seleccionar un archivo para cargar</span>
                                 </div>
                                 <!-- <input type="file" class="form-control-file" id="archivoCapa"> -->
                             </div>
                             <div class="form-group col-12">
-                                <label for="formGroupExampleInput2">Seleccione un tipo de capa</label>
-                                <select class="form-control">
+                                <label>Nombre de la capa<span class="text-danger">*</span></label>
+                                <input (change)="changeForm()" [formControl]="form.nombreCapa" class="form-control" type="text">
+                                <div *ngIf="formSubmitted && form.nombreCapa.invalid && form.nombreCapa.errors.required" class="alert alert-danger fade show" role="alert">
+                                    <span>El nombre de la capa es obligatorio</span>
+                                </div>
+                            </div>
+                            <div class="form-group col-12">
+                                <label>Seleccione un tipo de capa<span class="text-danger">*</span></label>
+                                <select class="form-control" [formControl]="form.tipoCapa">
                                     <option>Linea</option>
                                     <option>Poligono</option>
                                     <option>Puntos</option>
                                 </select>
+                            </div>
+                            <div class="col-12">
+                                <input type="submit" class="btn btn-success btn-block" value="Cargar">
+                                <button type="reset" class="btn btn-danger btn-block">Limpiar</button>
                             </div>
                         </form>
                     </div>
