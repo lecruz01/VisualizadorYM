@@ -23,6 +23,7 @@ import { HeaderComponent } from './components/shared/header/header.component';
 import { MapViewComponent } from './components/MapView/mapview.component';
 import { AdminViewComponent } from './components/AdminView/adminview.component';
 import { AboutViewComponent } from './components/AboutView/about.component';
+import { ColorPickerComponent } from './components/shared/colorPicker/colorpicker.component';
 
 @NgModule({
   declarations: [
@@ -30,14 +31,15 @@ import { AboutViewComponent } from './components/AboutView/about.component';
     HeaderComponent,
     MapViewComponent,
     AdminViewComponent,
-    AboutViewComponent
+    AboutViewComponent,
+    ColorPickerComponent
   ],
   imports: [
     BrowserModule,
     APP_ROUTING,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [
     ScreenDetectorService,

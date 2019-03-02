@@ -27,18 +27,20 @@ export class AdminViewComponent implements OnInit {
      */
     formSubmitted = false;
     formCapa: FormGroup;
-    geoJsonFile: any;
-    // nombreCapa = new FormControl('');
-    // tipoCapa = new FormControl('Linea');
-    // fileCapa = new FormControl('');
+    fileToUpload: any;
+    fileExtError: boolean;
 
-    constructor( private _layerService: LayerService, public _scnSz: ScreenDetectorService, private formBuilder: FormBuilder, private http: HttpClient ) {
-        this.layers = this._layerService.getLayers();
-        let i = 0;
-        this.layers.forEach(element => {
-            this.btnsShow[i] = 0;
-            i++;
-        });
+    constructor(
+        private _layerService: LayerService,
+        public _scnSz: ScreenDetectorService,
+        private formBuilder: FormBuilder,
+        private http: HttpClient ) {
+            this.layers = this._layerService.getLayers();
+            let i = 0;
+            this.layers.forEach(element => {
+                this.btnsShow[i] = 0;
+                i++;
+            });
      }
 
     ngOnInit(): void {
@@ -52,7 +54,7 @@ export class AdminViewComponent implements OnInit {
         bsCustomFileInput.init();
         this.formCapa = this.formBuilder.group({
             nombreCapa: ['', Validators.required],
-            fileCapa: ['', Validators.required],
+            fileCapa: [null, Validators.required],
             tipoCapa: ['Linea', Validators.required],
         });
      }
@@ -64,37 +66,32 @@ export class AdminViewComponent implements OnInit {
     }
 
     prepareFile(event) {
-        let fileList: FileList = event.target.files;
+        const fileList: FileList = event.target.files;
         if (fileList.length > 0) {
-            let file: File = fileList[0];
-            let formData: FormData = new FormData();
-            formData.append('uploadFile', file, file.name);
-            // console.log('Form Data: ' + formData);
-            // this._layerService.createLayer(formData);
-            // console.log(formData);
-            let headers = new HttpHeaders();
-            /** In Angular 5, including the header Content-Type can invalidate your request */
-            headers.append('enctype', 'multipart/form-data');
-            headers.append('Accept', 'application/json');
-            this.http.post('http://localhost:8001/api/layers', formData, { headers : headers } )
-            .subscribe(
-                data => console.log('success'),
-                error => console.log(error)
-            );
+            const file = fileList[0];
+            const fext = (file.name).split('.');
+            if (fext[1] === 'geojson') {
+                this.fileExtError = false;
+                this.fileToUpload = file;
+            } else {
+                this.fileExtError = true;
+            }
         }
     }
 
     onSubmitFormCreate(event) {
         this.formSubmitted = true;
-        // Revisar si el formulario es valido
         if (this.formCapa.invalid) {
             return;
         } else {
-            console.log(this.formCapa.value);
-            // console.log(this.nombreCapa.value);
-            // console.log(this.tipoCapa.value);
-            // console.log(this.fileCapa.value);
+            this._layerService.createLayer(this.formCapa.value, this.fileToUpload);
+            // this.formCapa.markAsPristine();
+            // this.formCapa.reset();
         }
+    }
+
+    clearForm() {
+        this.formCapa.reset();
     }
 
     verCapa(index: number) {

@@ -2547,15 +2547,16 @@ export class LayerService {
         return this.layers;
     }
 
-    createLayer(formData) {
-        let headers = new HttpHeaders();
-        /** In Angular 5, including the header Content-Type can invalidate your request */
-        // headers.append('Content-Type', 'multipart/form-data');
+    createLayer(form, file) {
+        const formData: FormData = new FormData();
+        formData.append('layerUpload', file);
+        formData.append('layerName', form.nombreCapa);
+        formData.append('layerType', form.tipoCapa);
+        const headers = new HttpHeaders();
         headers.append('Accept', 'application/json');
-        console.log(formData);
-        this.http.post('http://localhost:8001/api/layers', formData, { headers : headers } )
+        this.http.post('http://localhost:8001/api/layers', formData, { headers: headers } )
         .subscribe(
-            data => console.log('success'),
+            data => console.log(data),
             error => console.log(error)
         );
     }
