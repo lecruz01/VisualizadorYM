@@ -45,21 +45,34 @@ export class AdminViewComponent implements OnInit {
 
     ngOnInit(): void {
         // @ts-ignore
-        this.map = new mapboxgl.Map({
-            container: 'map',
-            style: this.type,
-            center: this.coords,
-            zoom: 11
-        });
+        if ( mapboxgl.supported() ) {
+            // @ts-ignore
+            this.map = new mapboxgl.Map({
+                container: 'map',
+                style: this.type,
+                center: this.coords,
+                zoom: 11
+            });
+            // @ts-ignore
+            this.map.addControl(new mapboxgl.NavigationControl(), 'top-right');
+        } else {
+            document.getElementById('map').innerHTML = '<h2>Tu navegador no soporta MapBox GL. Por favor utiliza un dispositivo diferente</h2>';
+        }
+
         bsCustomFileInput.init();
         this.formCapa = this.formBuilder.group({
             nombreCapa: ['', Validators.required],
             fileCapa: [null, Validators.required],
             tipoCapa: ['Linea', Validators.required],
+            colorCapa: ['#ffffff', Validators.required]
         });
      }
 
     get form() { return this.formCapa.controls; }
+
+    getColor(value) {
+        this.formCapa.patchValue({colorCapa: value});
+    }
 
     changeForm() {
         this.formSubmitted = false;
@@ -79,14 +92,18 @@ export class AdminViewComponent implements OnInit {
         }
     }
 
-    onSubmitFormCreate(event) {
+    onSubmitFormCreate() {
         this.formSubmitted = true;
         if (this.formCapa.invalid) {
             return;
         } else {
-            this._layerService.createLayer(this.formCapa.value, this.fileToUpload);
-            // this.formCapa.markAsPristine();
-            // this.formCapa.reset();
+            this._layerService.createLayer(this.formCapa.value, this.fileToUpload).subscribe(
+                data => {
+                    // @ts-ignore
+                    this.map.addLayer(data.layerData.layer);
+                },
+                error => console.log(error)
+            );
         }
     }
 

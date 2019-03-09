@@ -72,10 +72,20 @@
                                 </select>
                             </div>
                             <div class="form-group col-12">
-                                <app-color-picker [heading]="'Color'" [color]="'#FFFFFF'"></app-color-picker>
+                                <app-color-picker [heading]="'Color'" [color]="'#FFFFFF'" (event)="getColor($event)"></app-color-picker>
                             </div>
+                            <!-- <div class="form-group col-12">
+                                <label>Grosor de pintado (px)<span class="text-danger">*</span></label>
+                                <select class="form-control" [formControl]="form.grosorCapa">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </select>
+                            </div> -->
                             <div class="col-12">
-                                <input type="submit" class="btn btn-block" [ngClass]="fileExtError || formCapa.invalid || formCapa.prestine ? 'btn-secondary' : 'btn-success'" value="Cargar" [disabled]="fileExtError || formCapa.invalid || formCapa.prestine">
+                                <input type="submit" class="btn btn-block" [ngClass]="fileExtError || formCapa.invalid || formCapa.pristine ? 'btn-secondary' : 'btn-success'" value="Cargar" [disabled]="fileExtError || formCapa.invalid || formCapa.pristine">
                                 <!-- <button type="reset" class="btn btn-danger btn-block" (click)="clearForm()">Limpiar</button> -->
                             </div>
                         </form>
